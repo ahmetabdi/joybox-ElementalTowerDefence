@@ -1,23 +1,11 @@
-class Tower
+class Tower < Joybox::Core::Sprite
 
-  def self.nodeWithTheGame(game, location)
-    selfinitWithTheGame(game, location)
-  end
-
-  def initWithTheGame(game, location)
-    theGame = game
-    attackRange = 70
-    damage = 10
-    fireRate = 1
-
-    mySprite = CustomSprite.spriteWithFile("tower.png")
-    self.addChild(mySprite)
-
-    mySprite.setPosition(location)
-
-    theGame.addChild(self)
-
-    self.scheduleUpdate
+  def initialize(opts={})
+    @position = opts[:position]
+    @attack_range = 70
+    @damage = 10
+    @fire_rate = 1.0
+    super file_name: 'tower.png', position: @position
   end
 
 end

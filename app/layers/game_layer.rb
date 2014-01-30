@@ -11,12 +11,12 @@ class GameLayer < Joybox::Core::Layer
 
       touch = touches.any_object
 
-      base = @towerBases.detect { |tb| tb.touched?(touch.location) }
-
-      if base.canBuyTower?
-        tower = Tower.nodeWithTheGame(self, location: base.position)
-        towers.addObject(tower)
-        # tb.userData = (__bridge void *)(tower)
+      if base = towerBases.detect { |t| t.touched?(touch.location) }
+        if base.canBuyTower?
+          tower = Tower.new(position: base.position)
+          self << tower
+          towers.addObject(tower)
+        end
       end
 
     end
@@ -26,14 +26,20 @@ class GameLayer < Joybox::Core::Layer
   def loadTowerPositions
     @plistPath = NSBundle.mainBundle.pathForResource("common/TowersPosition", ofType:"plist")
     @towerPositions = NSArray.arrayWithContentsOfFile(@plistPath)
-    @towerBases = NSMutableArray.alloc.initWithCapacity(10)
 
     @towerPositions.each do |towerPos|
-      towerBase = CustomSprite.spriteWithFile("open_spot.png")
+      towerBase = OpenSpot.new(position: [towerPos.objectForKey("x").intValue, towerPos.objectForKey("y").intValue])
       self.addChild(towerBase)
-      towerBase.setPosition([towerPos.objectForKey("x").intValue, towerPos.objectForKey("y").intValue])
-      @towerBases.addObject(towerBase)
+      towerBases.addObject(towerBase)
     end
+  end
+
+  def towers
+    @towers ||= Array.new
+  end
+
+  def towerBases
+    @towerBases ||= Array.new
   end
 
 end
