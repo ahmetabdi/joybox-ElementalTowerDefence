@@ -6,11 +6,10 @@ class GameLayer < Joybox::Core::Layer
     self << background
 
     loadTowerPositions
+    addWayPoints
 
     on_touches_began do |touches, event|
-
       touch = touches.any_object
-
       if base = towerBases.detect { |t| t.touched?(touch.location) }
         if base.canBuyTower?
           tower = Tower.new(position: base.position)
@@ -18,9 +17,21 @@ class GameLayer < Joybox::Core::Layer
           towers.addObject(tower)
         end
       end
-
     end
 
+  end
+
+  def addWayPoints
+    waypoints << Waypoint.new( location: [ 420, 35 ] )
+    waypoints << Waypoint.new( location: [ 35,  35 ] )
+    waypoints << Waypoint.new( location: [ 35, 130 ] )
+    waypoints << Waypoint.new( location: [ 445,130 ] )
+    waypoints << Waypoint.new( location: [ 445,220 ] )
+    waypoints << Waypoint.new( location: [ -40,220 ] )
+
+    waypoints.each do |w|
+      self << w
+    end
   end
 
   def loadTowerPositions
@@ -34,12 +45,16 @@ class GameLayer < Joybox::Core::Layer
     end
   end
 
+  def waypoints
+    @waypoints ||= []
+  end
+
   def towers
-    @towers ||= Array.new
+    @towers ||= []
   end
 
   def towerBases
-    @towerBases ||= Array.new
+    @towerBases ||= []
   end
 
 end

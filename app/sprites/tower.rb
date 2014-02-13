@@ -10,8 +10,8 @@ class Tower < Joybox::Core::Sprite
 
   def draw
     super.tap do
-      ccDrawColor4B(255, 255, 255, 255)
-      ccDrawCircle(@position, @attack_range, 360, 30, true)
+      ccDrawColor4B(255, 0, 0, 255)
+      ccDrawCircle([21,21], @attack_range, 360, 30, true)
     end
   end
 

@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
-$:.unshift("/Library/RubyMotion/lib")
+$:.unshift("/Library/RubyMotion2.20/lib")
+# $:.unshift("/Library/RubyMotion/lib")
 require 'motion/project/template/ios'
 require 'joybox'
 
